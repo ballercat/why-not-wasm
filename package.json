@@ -1,0 +1,25 @@
+{
+  "name": "physics-wasm",
+  "version": "0.0.1",
+  "description": "Wasm tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ballercat/why-not-wasm.git"
+  },
+  "keywords": [
+    "wasm",
+    "js",
+    "emscripten",
+    "c++"
+  ],
+  "author": "Arthur Buldauskas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ballercat/why-not-wasm/issues"
+  },
+  "homepage": "https://github.com/ballercat/why-not-wasm#readme"
+}
