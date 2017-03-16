@@ -4,7 +4,8 @@
   "description": "Wasm tests",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "build-counter": "emcc src/cc/counter.cc -s BINARYEN=1 -s ONLY_MY_CODE=1 -o dist/counter.js"
   },
   "repository": {
     "type": "git",
