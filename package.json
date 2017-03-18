@@ -22,5 +22,13 @@
   "bugs": {
     "url": "https://github.com/ballercat/why-not-wasm/issues"
   },
-  "homepage": "https://github.com/ballercat/why-not-wasm#readme"
+  "homepage": "https://github.com/ballercat/why-not-wasm#readme",
+  "dependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "wasm-loader": "0.0.3",
+    "webpack": "^2.2.1"
+  }
 }
