@@ -1,12 +1,12 @@
 /* eslint-env es6 */
 import Counter from '../wasm/counter';
-import strLogger from './wasm-string-log';
+import { logger } from 'wasm-utils';
 
 var memory = new WebAssembly.Memory({initial: 1});
 var counter = new Counter({
   'global': {},
   'env': {
-    '__Z3logPc': strLogger(memory),
+    '__Z3logPc': logger(memory),
     'memory': memory,
     'table': new WebAssembly.Table({initial: 0, element: 'anyfunc'})
   }
