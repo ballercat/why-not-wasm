@@ -1,11 +1,10 @@
-
-#ifndef EMSCRIPTEN_KEEPALIVE
-  #define EMSCRIPTEN_KEEPALIVE __attribute__((used))
-#endif
+#include "wasm.h"
 
 int counter = 0;
+char countString[10] = "count\n";
 
 int EMSCRIPTEN_KEEPALIVE count() {
+  log(countString);
   return counter++;
 }
 
