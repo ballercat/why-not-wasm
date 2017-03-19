@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "build-counter": "emcc src/cc/counter.cc -s BINARYEN=1 -s ONLY_MY_CODE=1 -o dist/counter.js;cp dist/*.wasm src/wasm/"
+    "build-counter": "emcc src/cc/counter.cc -s BINARYEN=1 -s ONLY_MY_CODE=1 -o dist/counter.js;cp dist/*.wasm src/wasm/",
+    "build-object": "emcc src/cc/object.cc -s BINARYEN=1 -s ONLY_MY_CODE=1 -I/usr/local/include/ -o dist/object.js;cp dist/*.wasm src/wasm/"
   },
   "repository": {
     "type": "git",

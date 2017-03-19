@@ -34,3 +34,8 @@ code. https://github.com/ballercat/wasm-utils
 The current working demo allocates a new object on the heap and is able to print out a custom struct from the allocated
 object into the JS console.
 
+# TODO
+
+* Update `wasm-utils`. Better heap, better export managment
+* Update build process, add makefile + sh script.
+
