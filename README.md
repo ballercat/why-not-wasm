@@ -31,6 +31,6 @@ code. https://github.com/ballercat/wasm-utils
 
 * `webpack-dev-server`
 
-The current working allocates a new object on the heap and is able to print out a custom struct from the allocated
+The current working demo allocates a new object on the heap and is able to print out a custom struct from the allocated
 object into the JS console.
 
