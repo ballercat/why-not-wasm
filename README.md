@@ -21,11 +21,16 @@ fail as the binary wasm versions supported by these browsers are above that gene
 ## Install
 
 * Install `emscripten`, `binaryen`.
-* `npm run buld-counter`
-* `npm install -g http-server`
+* `npm install`
+* `npm run build-object`
+
+There is a custom dep on a wasm utils repo of mine. It's needed for stack, logger and memory operations from wasm
+code. https://github.com/ballercat/wasm-utils
 
 # Run
 
-`http-server .`
+* `webpack-dev-server`
 
+The current working allocates a new object on the heap and is able to print out a custom struct from the allocated
+object into the JS console.
 
