@@ -10,8 +10,9 @@ import {
 const noop = () => undefined;
 
 var memory = new WebAssembly.Memory({initial: 1});
-var simpleHead = heap(memory, 2048);
+var simpleHeap = heap(memory);
 var simpleStack = stack();
+const { malloc, free } = simpleHeap;
 
 const {logString, logNumeric} = logger(memory);
 
@@ -27,7 +28,8 @@ const deps = {
     STACKTOP: simpleStack.STACKTOP,
     STACK_MAX: simpleStack.STACK_MAX,
     abortStackOverflow: simpleStack.abortStackOverflow,
-    '__Znwj': heap(memory).new,
+    '__Znwj': malloc,
+    '__ZdlPv': free,
     '__Z3logPc': logString,
     '__Z3logf': logNumeric,
     'memory': memory,
@@ -39,9 +41,9 @@ const wasmObject = new PhysicsObject(deps);
 
 console.log('Test creation of an object on a heap (pointer)');
 
-const objPtr = wasmObject.exports.__Z6createv();
+let objPtr = wasmObject.exports.__Z6createv();
 
-console.log(`Created object on heap at address: ${objPtr}`);
+console.log(`Created object on heap at address (32bit word): ${objPtr >> 2}`);
 console.log('Calling wasm to log the position values of object (should return a heap pointer)');
 const positionPtr = wasmObject.exports.__Z11getPositionP14physics_object(objPtr)
 console.log(positionPtr);
@@ -62,3 +64,6 @@ const vec3PtrToObject = (uint8Ptr) => {
 
 console.log('Unrolled C++ vec3 Object Pointer: ', vec3PtrToObject(positionPtr));
 
+console.log('Free memory from heap: ' , wasmObject.exports.__Z7destroyP14physics_object(objPtr));
+objPtr = wasmObject.exports.__Z6createv();
+console.log(`Created a new object at (32bit word) ${objPtr >> 2}`);

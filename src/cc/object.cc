@@ -14,6 +14,10 @@ physics_object* EMSCRIPTEN_KEEPALIVE create() {
   return object;
 }
 
+void EMSCRIPTEN_KEEPALIVE destroy(physics_object* ptr) {
+  delete ptr;
+}
+
 physics_object* EMSCRIPTEN_KEEPALIVE setPosition(physics_object* obj, float x, float y, float z) {
   obj->position.x = x;
   obj->position.y = y;
