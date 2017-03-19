@@ -47,7 +47,7 @@ const positionPtr = wasmObject.exports.__Z11getPositionP14physics_object(objPtr)
 console.log(positionPtr);
 
 // We could get at the value from JS also, but we would need to undroll the memory layout of an object
-// For the above to print anything useufl we need to do that... otherwise we only get a heap pointer to
+// For the above to print anything useful we need to do that... otherwise we only get a heap pointer to
 // the memory address for obj->position
 const vec3PtrToObject = (uint8Ptr) => {
   const f32 = new Float32Array(memory.buffer);
