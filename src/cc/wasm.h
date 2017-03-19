@@ -8,5 +8,7 @@
 #endif
 
 extern void log(char *p);
+extern void log(float);
+extern void log(int);
 
 #endif // _WASM_HEADER_
