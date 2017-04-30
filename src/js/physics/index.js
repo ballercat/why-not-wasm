@@ -3,52 +3,48 @@ import PhysicsObject from '../../wasm/object';
 
 import {
   heap,
-  stack
+  stack,
+  types,
+  env
 } from 'wasm-utils';
 
-const noop = () => undefined;
-
-var memory = new WebAssembly.Memory({initial: 1});
-const { malloc, free } = heap(memory);
-var simpleStack = stack();
-
 const deps = {
-  'global': {},
-  'env': {
-    STACKTOP: simpleStack.STACKTOP,
-    STACK_MAX: simpleStack.STACK_MAX,
-    abortStackOverflow: simpleStack.abortStackOverflow,
-    '__Znwj': malloc,
-    '__ZdlPv': free,
-    'memory': memory,
-    'table': new WebAssembly.Table({initial: 0, element: 'anyfunc'})
-  }
+  global: {},
+  env: env()
 };
 
-// console.log('Test creation of an object on a heap (pointer)');
-//
-// let objPtr = wasmObject.exports.__Z6createv();
-//
-// console.log(`Created object on heap at address (32bit word): ${objPtr >> 2}`);
-// console.log('Calling wasm to log the position values of object (should return a heap pointer)');
-// const positionPtr = wasmObject.exports.__Z11getPositionP14physics_object(objPtr)
-// console.log(positionPtr);
-//
-//
-// console.log('Unrolled C++ vec3 Object Pointer: ', vec3PtrToObject(positionPtr));
-//
-// console.log('Free memory from heap: ' , wasmObject.exports.__Z7destroyP14physics_object(objPtr));
-// objPtr = wasmObject.exports.__Z6createv();
-// console.log(`Created a new object at (32bit word) ${objPtr >> 2}`);
+const vec3 = types.define({
+  x: types.f32,
+  y: types.f32,
+  z: types.f32
+});
+
+const object = types.define({
+  children: types.u32,
+  total_children: types.u32,
+  forces: types.u32,
+  total_forces: types.u32,
+  position: vec3,
+  test: types.u8
+});
 
 class Physics {
   constructor() {
-    this._wasm = new PhysicsObject(deps).exports;
+    this.deps = deps;
+    this._wasm = new PhysicsObject(this.deps).exports;
   }
 
   newObject() {
+    const { memory } = this.deps.env;
+
     const ptr = this._wasm.__Z6createv();
-    return ptr;
+    const obj = object(new DataView(memory.buffer, ptr, object.size));
+    obj.translate = (x, y, z) => {
+      this._wasm.__Z9translateP14physics_objectfff(ptr, x, y, z);
+    }
+
+    window.uint8 = new Uint8Array(memory.buffer, ptr);
+    return obj;
   }
 }
 
